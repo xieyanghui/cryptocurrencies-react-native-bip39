@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-const utf8 = require('utf8');
+// const utf8 = require('utf8');
 var base64js = require('base64-js');
 
 const Buffer = require('buffer').Buffer;
@@ -65,7 +65,7 @@ function bytesToBinary(bytes) {
     */
     binaryParts.push(lpad(x.toString(2), '0', 8));
   });
-  console.log({ binaryParts });
+  // console.log({ binaryParts });
   return binaryParts.join('');
 }
 
@@ -107,7 +107,7 @@ async function deriveChecksumBits(entropyBuffer) {
   */
   const inBinary = bytesToBinary(normalizedHashByteArray);
   const result = inBinary.slice(0, CS);
-  console.log({ result });
+  // console.log({ result });
   return result;
 }
 
@@ -160,7 +160,7 @@ async function mnemonicToEntropy(mnemonic, wordlist) {
   }
   const entropy = Buffer.from(entropyBytes);
   const newChecksum = await deriveChecksumBits(entropy);
-  console.log({ newChecksum, checksumBits });
+  // console.log({ newChecksum, checksumBits });
   if (newChecksum !== checksumBits) {
     throw new Error(INVALID_CHECKSUM);
   }
@@ -188,14 +188,14 @@ async function entropyToMnemonic(entropy, wordlist) {
   }
   const entropyBits = bytesToBinary(Array.from(entropy));
   const checksumBits = await deriveChecksumBits(entropy);
-  console.log('entropyToMnemonic: ', { entropyBits, checksumBits });
+  // console.log('entropyToMnemonic: ', { entropyBits, checksumBits });
   const bits = entropyBits + checksumBits;
-  console.log({ bits });
+  // console.log({ bits });
   const chunks = bits.match(/(.{1,11})/g);
-  console.log({ chunks });
+  // console.log({ chunks });
   const words = chunks.map(binary => {
     const index = binaryToByte(binary);
-    console.log('* index for word (' + binary + ') is: ', index);
+    // console.log('* index for word (' + binary + ') is: ', index);
     return wordlist[index];
   });
   return wordlist[0] === '\u3042\u3044\u3053\u304f\u3057\u3093' // Japanese wordlist
